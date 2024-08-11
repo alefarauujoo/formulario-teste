@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Cadastro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" />
+</head>
+
+<body>
+    <div class='main-container'>
+
+        <div class='flex-row-c'>
+            <div class='frame'>
+                <div class='buttons'>
+                    <span class='price'>Preço</span>
+                </div>
+                <div class='frame-1'>
+                    <span class='resale'>Revenda</span>
+                </div>
+                <div class='frame-2'>
+                    <span class='agencies'>Agências</span>
+                </div>
+                <div class='frame-3'>
+                    <span class='contato'>Contato</span>
+                </div>
+            </div>
+            <button class='button-frame'>
+                <span class='login'>Login</span>
+            </button>
+            <div class='menu'>
+                <div class='vector'></div>
+            </div>
+            <div class='image'></div>
+        </div>
+
+        <div class='flex-row-ecf'>
+            <div class='d-casual-life-smiling-young-man-with-laptop-sitting-on-floor'></div>
+            <div class='caixa-de-login'>
+                <div class='tittle'>
+                    <span class='comece-agora'>Comece agora</span>
+                </div>
+                <div class='subtittle'>
+                    <span class='cadastro-rapido'>
+                        Se cadastre em poucos segundos e comece a usar o NitroNews hoje
+                        mesmo!
+                    </span>
+                </div>
+
+
+                <div class='frame-4'>
+                    <form id="registrationForm" class="form">
+                        <input type="text" name="nome" placeholder="Nome Completo" required />
+                        <input type="email" name="email" placeholder="Email" required />
+                        <input type="password" name="senha" placeholder="Senha" required />
+                        <input type="password" name="confirmacaoSenha" placeholder="Confirme senha" required />
+                        <button type="submit">Cadastrar</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {
+                nome: formData.get('nome'),
+                email: formData.get('email'),
+                senha: formData.get('senha'),
+                confirmacaoSenha: formData.get('confirmacaoSenha')
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': 'ECA1AB4CE8583613A2C759B445E98'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.erro) {
+                    alert(`Erro: ${result.tipoErro}`);
+                } else {
+                    alert('Cadastro realizado com sucesso!');
+                    // Limpar o formulário ou redirecionar
+                    document.getElementById('registrationForm').reset();
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Ocorreu um erro ao enviar o formulário.');
+            }
+        });
+    </script>
+</body>
+
+</html>
